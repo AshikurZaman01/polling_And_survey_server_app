@@ -32,7 +32,19 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
 
+
         const userCollection = client.db("pollAndSurvey").collection("users");
+        const surveyCollection = client.db("pollAndSurvey").collection("surveys");
+
+        // surveys
+        app.post('/surveys', async (req, res) => {
+            const survey = req.body;
+            const result = await surveyCollection.insertOne(survey);
+            res.send(result)
+            console.log(result)
+        })
+        // surveys end
+
 
         // users
         app.post('/users', async (req, res) => {
