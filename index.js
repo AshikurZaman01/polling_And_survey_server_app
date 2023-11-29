@@ -43,6 +43,21 @@ async function run() {
             res.send(result)
             console.log(result)
         })
+
+        app.get('/surveys', async (req, res) => {
+            const result = await surveyCollection.find({}).toArray();
+            res.send(result)
+            console.log(result)
+        })
+
+        app.get('/surveys/:id', async (req, res) => {
+            const id = req.params.id;
+            const result = await surveyCollection.findOne({ _id: new ObjectId(id) });
+            res.send(result)
+            console.log(result)
+        })
+
+
         // surveys end
 
 
