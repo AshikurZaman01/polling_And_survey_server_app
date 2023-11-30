@@ -37,6 +37,23 @@ async function run() {
         const surveyCollection = client.db("pollAndSurvey").collection("surveys");
         const commentsCollection = client.db("pollAndSurvey").collection("comments");
 
+
+        // admin-states
+        app.get('/admin-states', async (req, res) => {
+            const users = await userCollection.estimatedDocumentCount();
+            const surveys = await surveyCollection.estimatedDocumentCount();
+            const comments = await commentsCollection.estimatedDocumentCount();
+            const admin = await userCollection.findOne({ role: "admin" });
+
+            res.send({
+                users,
+                surveys,
+                comments,
+                admin
+            })
+        })
+        // admin-states
+
         // comments
         app.post('/comments', async (req, res) => {
             const comment = req.body;
