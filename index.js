@@ -57,9 +57,20 @@ async function run() {
             console.log(result)
         })
 
-
+        app.delete('/surveys/:id', async (req, res) => {
+            const id = req.params.id;
+            const result = await surveyCollection.deleteOne({ _id: new ObjectId(id) });
+            res.send(result)
+            console.log(result)
+        })
+        app.patch('/surveys/:id', async (req, res) => {
+            const id = req.params.id;
+            const data = req.body;
+            const result = await surveyCollection.updateOne({ _id: new ObjectId(id) }, { $set: data });
+            res.send(result);
+            console.log(result);
+        })
         // surveys end
-
 
         // users
         app.post('/users', async (req, res) => {
