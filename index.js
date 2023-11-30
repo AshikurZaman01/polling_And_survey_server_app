@@ -35,6 +35,30 @@ async function run() {
 
         const userCollection = client.db("pollAndSurvey").collection("users");
         const surveyCollection = client.db("pollAndSurvey").collection("surveys");
+        const commentsCollection = client.db("pollAndSurvey").collection("comments");
+
+        // comments
+        app.post('/comments', async (req, res) => {
+            const comment = req.body;
+            const result = await commentsCollection.insertOne(comment);
+            res.send(result)
+            console.log(result)
+        })
+
+        app.get('/comments', async (req, res) => {
+            const result = await commentsCollection.find({}).toArray();
+            res.send(result)
+            console.log(result)
+        })
+
+        app.get('/comments/:surveyId', async (req, res) => {
+            const id = req.params.id;
+            const result = await commentsCollection.deleteOne({ _id: new ObjectId(id) });
+            res.send(result)
+            console.log(result)
+        })
+        // comments
+
 
         // surveys
         app.post('/surveys', async (req, res) => {
